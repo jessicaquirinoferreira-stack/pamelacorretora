@@ -1,0 +1,125 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Health check collection for getDocFromServer testConnection()
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Global helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isBootstrappedAdmin() {
+      return isSignedIn() &&
+        (request.auth.token.email == 'juniorwebcode@gmail.com' || request.auth.token.email == 'admin@x.com');
+    }
+
+    function isAdmin() {
+      return isBootstrappedAdmin() ||
+        (isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    // Property validation
+    function isValidProperty(data) {
+      return data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+        data.slug is string && data.slug.size() > 0 && data.slug.size() <= 200 &&
+        data.transactionType in ['sale', 'rent'] &&
+        data.price is number && data.price >= 0 &&
+        data.status in ['draft', 'published', 'archived'] &&
+        (!('description' in data) || (data.description is string && data.description.size() <= 4000)) &&
+        (!('condominiumName' in data) || (data.condominiumName is string && data.condominiumName.size() <= 150)) &&
+        (!('region' in data) || (data.region is string && data.region.size() <= 150)) &&
+        (!('coverImage' in data) || (data.coverImage is string && data.coverImage.size() <= 1000));
+    }
+
+    // Lead / Visit Request validation
+    function isValidLead(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() <= 150 &&
+        data.phone is string && data.phone.size() > 0 && data.phone.size() <= 40 &&
+        data.status in ['new', 'in_progress', 'visit_requested', 'visit_confirmed', 'pending_reply', 'proposal_active', 'converted', 'closed'] &&
+        (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
+        (!('message' in data) || (data.message is string && data.message.size() <= 2000)) &&
+        (!('propertyTitle' in data) || (data.propertyTitle is string && data.propertyTitle.size() <= 200)) &&
+        (!('propertyId' in data) || (data.propertyId is string && data.propertyId.size() <= 128)) &&
+        (!('preferredContactTime' in data) || (data.preferredContactTime is string && data.preferredContactTime.size() <= 100)) &&
+        (!('suggestedDate' in data) || (data.suggestedDate is string && data.suggestedDate.size() <= 50)) &&
+        (!('suggestedTime' in data) || (data.suggestedTime is string && data.suggestedTime.size() <= 50));
+    }
+
+    // SiteSettings validation
+    function isValidSiteSettings(data) {
+      return (!('professionalName' in data) || (data.professionalName is string && data.professionalName.size() <= 150)) &&
+        (!('bioTagline' in data) || (data.bioTagline is string && data.bioTagline.size() <= 250)) &&
+        (!('bioDescription' in data) || (data.bioDescription is string && data.bioDescription.size() <= 3000)) &&
+        (!('whatsappNumber' in data) || (data.whatsappNumber is string && data.whatsappNumber.size() <= 50)) &&
+        (!('contactPhone' in data) || (data.contactPhone is string && data.contactPhone.size() <= 50)) &&
+        (!('contactEmail' in data) || (data.contactEmail is string && data.contactEmail.size() <= 150)) &&
+        (!('logoUrl' in data) || (data.logoUrl is string && data.logoUrl.size() <= 1000));
+    }
+
+    // LandingPage validation
+    function isValidLandingPage(data) {
+      return data.slug is string && data.slug.size() > 0 && data.slug.size() <= 150 &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+        data.status in ['draft', 'published'];
+    }
+
+    // Properties rules: Public can read published properties; Admin can manage all
+    match /properties/{propertyId} {
+      allow get: if isValidId(propertyId) && (isAdmin() || (resource != null && resource.data.status == 'published'));
+      allow list: if isAdmin() || (resource.data.status == 'published');
+      allow create: if isValidId(propertyId) && isAdmin() && isValidProperty(incoming());
+      allow update: if isValidId(propertyId) && isAdmin() && isValidProperty(incoming());
+      allow delete: if isValidId(propertyId) && isAdmin();
+    }
+
+    // Leads rules: Public can create with strict validation; Only Admins can read, update, or delete
+    match /leads/{leadId} {
+      allow get, list: if isAdmin();
+      allow create: if isValidId(leadId) && isValidLead(incoming());
+      allow update: if isValidId(leadId) && isAdmin() && isValidLead(incoming());
+      allow delete: if isValidId(leadId) && isAdmin();
+    }
+
+    // SiteSettings rules: Public can read; Only Admins can write
+    match /siteSettings/{settingsId} {
+      allow get, list: if isValidId(settingsId);
+      allow create, update: if isValidId(settingsId) && isAdmin() && isValidSiteSettings(incoming());
+      allow delete: if isValidId(settingsId) && isAdmin();
+    }
+
+    // LandingPages rules: Public can read published; Only Admins can write
+    match /landingPages/{landingPageId} {
+      allow get: if isValidId(landingPageId) && (isAdmin() || (resource != null && resource.data.status == 'published'));
+      allow list: if isAdmin() || (resource.data.status == 'published');
+      allow create, update: if isValidId(landingPageId) && isAdmin() && isValidLandingPage(incoming());
+      allow delete: if isValidId(landingPageId) && isAdmin();
+    }
+
+    // Admins rules: Only Admins can read or manage
+    match /admins/{adminId} {
+      allow read, write: if isValidId(adminId) && isAdmin();
+    }
+  }
+}

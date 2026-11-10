@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-forest: #192b20;
+    --color-forest-light: #243d2e;
+    --color-olive: #3b5242;
+    --color-sage: #819885;
+    --color-sand: #fbf9f5;
+    --color-sand-dark: #f0ebe1;
+    --color-gold: #c5a880;
+    --color-gold-hover: #b8976b;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #fbf9f5;
+    color: #192b20;
+  }
+
+  h1, h2, h3, .font-serif-luxury {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0ebe1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #819885;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b5242;
+}
+
+/* Animations from Magic UI and Aceternity UI */
+@keyframes shiny-text {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0.18;
+    transform: translate(-5%, -5%) scale(0.95);
+  }
+  50% {
+    opacity: 0.32;
+    transform: translate(2%, 2%) scale(1.05);
+  }
+  100% {
+    opacity: 0.18;
+    transform: translate(-5%, -5%) scale(0.95);
+  }
+}
+
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
+
+.animate-shiny-text {
+  animation: shiny-text 6s ease-in-out infinite;
+}
+
+.animate-shimmer-sweep {
+  animation: shimmer-sweep 3.5s infinite linear;
+}
+
+.animate-spotlight {
+  animation: spotlight 12s ease-in-out infinite;
+}
+
+.animate-border-beam {
+  animation: border-beam calc(var(--duration)*1s) infinite linear;
+}
+
+.animate-meteor {
+  animation: meteor linear infinite;
+}

@@ -1,0 +1,143 @@
+{
+  "entities": {
+    "Property": {
+      "title": "Property",
+      "description": "Real estate property listing for Pâmela Boccaletti's portfolio in Alphaville/SP",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "code": { "type": "string", "maxLength": 50 },
+        "transactionType": { "type": "string", "enum": ["sale", "rent"] },
+        "propertyType": { "type": "string", "enum": ["apartment", "house", "penthouse", "land", "commercial"] },
+        "price": { "type": "number" },
+        "condominiumName": { "type": "string", "maxLength": 150 },
+        "region": { "type": "string", "maxLength": 150 },
+        "areaM2": { "type": "number" },
+        "bedrooms": { "type": "number" },
+        "suites": { "type": "number" },
+        "bathrooms": { "type": "number" },
+        "halfBaths": { "type": "number" },
+        "parkingSpots": { "type": "number" },
+        "storageUnit": { "type": "boolean" },
+        "furnished": { "type": "boolean" },
+        "gourmetBalcony": { "type": "boolean" },
+        "expandedLivingRoom": { "type": "boolean" },
+        "description": { "type": "string", "maxLength": 4000 },
+        "features": { "type": "array" },
+        "coverImage": { "type": "string", "maxLength": 1000 },
+        "gallery": { "type": "array" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "featured": { "type": "boolean" },
+        "pendingConfirmation": { "type": "boolean" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "slug", "transactionType", "price", "status"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Visitor contact and visit request inquiry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "email": { "type": "string", "maxLength": 150 },
+        "propertyId": { "type": "string", "maxLength": 128 },
+        "propertyTitle": { "type": "string", "maxLength": 200 },
+        "message": { "type": "string", "maxLength": 2000 },
+        "preferredContactTime": { "type": "string", "maxLength": 100 },
+        "suggestedDate": { "type": "string", "maxLength": 50 },
+        "suggestedTime": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["new", "in_progress", "visit_requested", "visit_confirmed", "pending_reply", "proposal_active", "converted", "closed"] },
+        "notes": { "type": "string", "maxLength": 3000 },
+        "sourceUrl": { "type": "string", "maxLength": 500 },
+        "utmSource": { "type": "string", "maxLength": 100 },
+        "utmMedium": { "type": "string", "maxLength": 100 },
+        "utmCampaign": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "phone", "status"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Customizable branding, contacts and institutional settings for the website",
+      "type": "object",
+      "properties": {
+        "professionalName": { "type": "string", "maxLength": 150 },
+        "logoUrl": { "type": "string", "maxLength": 1000 },
+        "bioTagline": { "type": "string", "maxLength": 250 },
+        "bioDescription": { "type": "string", "maxLength": 3000 },
+        "region": { "type": "string", "maxLength": 150 },
+        "instagramHandle": { "type": "string", "maxLength": 100 },
+        "facebookName": { "type": "string", "maxLength": 100 },
+        "whatsappNumber": { "type": "string", "maxLength": 50 },
+        "contactPhone": { "type": "string", "maxLength": 50 },
+        "contactEmail": { "type": "string", "maxLength": 150 },
+        "creciNumber": { "type": "string", "maxLength": 50 },
+        "officeAddress": { "type": "string", "maxLength": 250 },
+        "heroHeadline": { "type": "string", "maxLength": 250 },
+        "heroSubheadline": { "type": "string", "maxLength": 500 },
+        "legalDisclaimers": { "type": "string", "maxLength": 2000 },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "LandingPage": {
+      "title": "LandingPage",
+      "description": "Custom campaign and promotional property landing pages",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "slug": { "type": "string", "maxLength": 150 },
+        "title": { "type": "string", "maxLength": 200 },
+        "headline": { "type": "string", "maxLength": 250 },
+        "subheadline": { "type": "string", "maxLength": 500 },
+        "propertyId": { "type": "string", "maxLength": 128 },
+        "coverImage": { "type": "string", "maxLength": 1000 },
+        "features": { "type": "array" },
+        "status": { "type": "string", "enum": ["draft", "published"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["slug", "title", "status"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized administrator user metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin", "editor"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/properties/{propertyId}": {
+      "schema": "Property",
+      "description": "Real estate listings, public can read published items, admins manage all"
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Visitor contact and visit booking submissions"
+    },
+    "/siteSettings/{settingsId}": {
+      "schema": "SiteSettings",
+      "description": "Global website configuration, contacts and branding parameters"
+    },
+    "/landingPages/{landingPageId}": {
+      "schema": "LandingPage",
+      "description": "Campaign landing pages for specific promotions or properties"
+    },
+    "/admins/{adminId}": {
+      "schema": "AdminUser",
+      "description": "Authorized administrators list"
+    }
+  }
+}

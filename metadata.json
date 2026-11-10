@@ -1,0 +1,6 @@
+{
+  "name": "Pâmela Boccaletti | Imóveis em Alphaville/SP",
+  "description": "Imóveis exclusivos em Alphaville/SP com atendimento personalizado por Pâmela Boccaletti. Venda, locação e consultoria imobiliária de alto padrão.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

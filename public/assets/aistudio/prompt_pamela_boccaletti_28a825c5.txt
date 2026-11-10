@@ -1,0 +1,533 @@
+PROMPT MASTER — WEB DESIGNER AI PRO
+SITE IMOBILIÁRIO PREMIUM — PÂMELA BOCCALETTI | ALPHAVILLE/SP
+
+Atue como uma equipe sênior de desenvolvimento: Full Stack, React/TypeScript, UX/UI premium, branding, marketing imobiliário, SEO, Firebase e integrações. Desenvolva um SITE PÚBLICO INSTITUCIONAL IMOBILIÁRIO premium, completo, responsivo e funcional para Pâmela Boccaletti. O site é o produto principal; o painel administrativo é apenas uma área privada para gerenciar o próprio site. Não transforme o projeto em SaaS, CRM comercializado separadamente ou sistema genérico.
+
+==================================================
+1. PERFIL E INFORMAÇÕES EXTRAÍDAS DA IMAGEM
+==================================================
+
+Instagram: https://www.instagram.com/pamelaboccaletti/
+Usuário: @pamelaboccaletti
+Nome exibido: Pâmela Boccaletti
+Facebook identificado: Pamela Boccaletti
+
+Bio visível:
+“Imóveis em Alphaville/SP
+Atendimento Exclusivo.
+Me chama e agende uma visita.”
+
+Dados confirmados visualmente:
+- Profissional: Pâmela Boccaletti.
+- Segmento: imóveis.
+- Região divulgada: Alphaville/SP.
+- Posicionamento: atendimento exclusivo.
+- Chamada: contato para agendar visita.
+- Instagram: @pamelaboccaletti.
+- Facebook: Pamela Boccaletti.
+
+Não invente telefone, WhatsApp, e-mail, CRECI, endereço comercial, tempo de experiência, premiações, quantidade de vendas, parcerias ou outras regiões de atuação. Se o Instagram não puder ser acessado automaticamente, use somente as imagens fornecidas e não alegue ter analisado conteúdo inacessível. Deixe campos pendentes editáveis no painel.
+
+==================================================
+2. IMÓVEIS IDENTIFICADOS NAS ARTES ENVIADAS
+==================================================
+
+Os dados abaixo foram lidos de peças publicitárias e devem ser tratados como referências históricas, sujeitas à confirmação da corretora antes de publicar. Não afirmar disponibilidade atual.
+
+ANÚNCIO A — CONDOMÍNIO ALPHA VITA
+- Condomínio divulgado: Alpha Vita.
+- Negócio: venda.
+- Preço exibido: R$ 1.940.000,00.
+- Foto mostra sala de estar integrada à varanda, decoração contemporânea, ambiente amplo e acabamento sofisticado.
+- A imagem contém pequenos indicadores de características, mas não estão legíveis o suficiente para confirmar números e detalhes.
+- Não inventar metragem, dormitórios, suítes, vagas, condomínio, IPTU, endereço ou outras características. Marcar como pendentes de confirmação.
+
+ANÚNCIO B — JARDINS DE TAMBORÉ, ALPHAVILLE
+- Local: Jardins de Tamboré, Alphaville.
+- Negócio: venda.
+- Área: 100 m².
+- Dormitórios: 3.
+- Suítes: 2.
+- Lavabo.
+- Vagas: 2.
+- Depósito no andar.
+- Preço exibido: R$ 1.100.000,00.
+- Fotos mostram sala de estar e decoração contemporânea.
+
+ANÚNCIO C — JARDINS DE TAMBORÉ, ALPHAVILLE
+- Local: Jardins de Tamboré, Alphaville.
+- Negócio: locação.
+- Área: 100 m².
+- 1 suíte.
+- Lavabo.
+- 2 vagas.
+- Anunciado como totalmente mobiliado.
+- Preço exibido: R$ 6.900,00 por mês.
+- Imagens mostram sala de estar e jantar mobiliadas.
+- A arte não esclarece se condomínio, IPTU ou outras despesas estão incluídos. Não afirmar que estão.
+
+OUTRA PUBLICAÇÃO — JARDINS DE TAMBORÉ
+Uma publicação/reel exibe:
+- 100 m².
+- 2 suítes.
+- 2 vagas.
+- Sala ampliada.
+- Varanda gourmet.
+
+Não está claro se essa publicação se refere ao imóvel de venda, ao imóvel de locação ou a outro imóvel. Não misturar automaticamente essas características com os anúncios B ou C. Criar registro separado como “a confirmar” até a corretora esclarecer.
+
+OUTROS CONTEÚDOS DO PERFIL:
+A captura também mostra vídeos da corretora em ambientes internos, imagens de áreas verdes, conteúdo de lazer e uma publicação sobre Festival de Inverno. Podem inspirar conteúdos editoriais e redes sociais, mas não devem ser tratados como características de imóveis sem confirmação.
+
+==================================================
+3. POSICIONAMENTO E MENSAGEM
+==================================================
+
+Posicionar Pâmela Boccaletti como profissional de atendimento imobiliário exclusivo em Alphaville/SP.
+
+Mensagem central sugerida:
+“Seu próximo imóvel em Alphaville começa com um atendimento exclusivo.”
+
+Texto institucional sugerido:
+“Encontre imóveis selecionados em Alphaville com atendimento próximo e personalizado. Conheça opções para comprar ou alugar e agende uma visita com Pâmela Boccaletti.”
+
+Não prometer valorização, rentabilidade, aprovação de crédito ou encontrar “o melhor imóvel”. Não afirmar exclusividade jurídica de um imóvel sem autorização expressa.
+
+==================================================
+4. OBJETIVOS DO SITE
+==================================================
+
+1. Apresentar Pâmela Boccaletti.
+2. Destacar atuação em Alphaville/SP.
+3. Divulgar imóveis à venda e para locação.
+4. Apresentar fotos e detalhes completos.
+5. Permitir busca e filtros.
+6. Facilitar agendamento de visitas.
+7. Gerar contatos qualificados.
+8. Permitir páginas individuais compartilháveis.
+9. Criar landing pages para campanhas.
+10. Administrar conteúdo e imóveis sem editar código.
+11. Acompanhar acessos, leads e conversões.
+
+==================================================
+5. IDENTIDADE VISUAL PREMIUM
+==================================================
+
+Criar identidade sofisticada, contemporânea e acolhedora, inspirada nas artes enviadas:
+- Verde oliva e verde profundo.
+- Tons naturais, terrosos e areia.
+- Bege e off-white.
+- Branco.
+- Dourado ou bronze em pequenos detalhes.
+- Fotografias arquitetônicas com luz natural.
+- Elementos botânicos discretos.
+- Tipografia editorial elegante combinada com fonte sans-serif limpa.
+
+A identidade observada nas artes utiliza fundos claros, detalhes verdes, tons terrosos e grafismos botânicos. Use como direção, sem copiar as peças literalmente. Transmitir exclusividade, sofisticação, confiança, acolhimento e curadoria. Evitar aparência de portal imobiliário genérico. Permitir editar cores, logo, fontes e imagens no painel.
+
+==================================================
+6. ESTRUTURA DO SITE PÚBLICO
+==================================================
+
+HOME:
+Cabeçalho com marca Pâmela Boccaletti e menus Início, Comprar, Alugar, Destaques, Sobre, Conteúdos e Contato; botão “Agendar visita”. Menu mobile moderno.
+
+Hero:
+Título: “Encontre seu lugar em Alphaville.”
+Texto: “Uma seleção de imóveis para comprar ou alugar, com atendimento exclusivo e acompanhamento personalizado.”
+Botões: “Explorar imóveis” e “Agendar uma visita”.
+Usar foto profissional autorizada ou imagem de imóvel aprovada.
+
+Busca rápida:
+- Comprar ou alugar.
+- Tipo de imóvel.
+- Condomínio/região.
+- Preço mínimo e máximo.
+- Dormitórios.
+- Pesquisar.
+
+Imóveis em destaque:
+Cards com foto, venda/locação, título, condomínio/região, preço, metragem, dormitórios, suítes, vagas e botão “Ver imóvel”. Exibir apenas dados confirmados.
+
+Sobre:
+Título: “Um atendimento pensado em você.”
+Texto-base editável: “Sou Pâmela Boccaletti e atuo com imóveis em Alphaville/SP. Meu compromisso é oferecer atendimento exclusivo, entender suas prioridades e acompanhar você na busca pelo imóvel ideal.”
+Permitir completar trajetória e qualificações, sem inventar informações.
+
+Diferenciais:
+- Atendimento exclusivo.
+- Seleção de imóveis.
+- Orientação durante a busca.
+- Agendamento de visitas.
+- Acompanhamento personalizado.
+
+Região:
+Criar conteúdo sobre Alphaville/SP e locais efetivamente atendidos. Jardins de Tamboré e Alpha Vita podem ser citados por aparecerem nos anúncios fornecidos. Não inventar distâncias, infraestrutura, escolas, hospitais, comércio ou localização exata. Verificar informações locais antes de publicar.
+
+Chamada final: “Vamos encontrar seu próximo imóvel?” com botão de agendamento.
+
+Rodapé:
+Nome, imóveis em Alphaville/SP, Instagram @pamelaboccaletti, Facebook Pamela Boccaletti, links de comprar/alugar, política de privacidade, termos e dados profissionais/CRECI somente quando fornecidos. Incluir link discreto e centralizado “Painel Admin”.
+
+PÁGINAS:
+- Comprar: listagem e filtros de imóveis à venda.
+- Alugar: listagem e filtros de imóveis para locação.
+- Sobre: apresentação, foto, proposta de atendimento e canais.
+- Contato: formulário e informações oficiais.
+- Detalhes do imóvel: uma página pública com URL própria para cada imóvel.
+
+PÁGINA INDIVIDUAL DO IMÓVEL:
+- Galeria de fotos e foto de capa.
+- Título e código, se houver.
+- Tipo de negócio.
+- Preço.
+- Condomínio/região.
+- Área, dormitórios, suítes, banheiros, lavabo e vagas.
+- Depósito, mobiliado, varanda gourmet e sala ampliada, quando confirmados.
+- Descrição.
+- Características do imóvel e do condomínio.
+- Mapa ou localização aproximada, se autorizada.
+- Botão agendar visita.
+- Compartilhar.
+- Imóveis semelhantes.
+- Aviso para confirmar informações e disponibilidade.
+
+Exemplos de URLs amigáveis:
+ /imovel/apartamento-jardins-de-tambore-venda
+ /imovel/apartamento-mobiliado-jardins-de-tambore-locacao
+
+Não publicar endereço residencial exato sem autorização.
+
+==================================================
+7. BUSCA E FILTROS
+==================================================
+
+Criar busca funcional conectada ao Firestore:
+- Comprar/alugar.
+- Apartamento, casa, casa em condomínio, terreno, cobertura e categorias cadastradas.
+- Condomínio/região.
+- Faixa de preço.
+- Área.
+- Dormitórios.
+- Suítes.
+- Vagas.
+- Mobiliado.
+- Varanda gourmet.
+- Destaques.
+
+Ordenação por mais recentes, menor preço, maior preço e maior área. Não exibir filtros sem resultados. Em dispositivos móveis, filtros devem ser fáceis de usar.
+
+==================================================
+8. LEADS E AGENDAMENTO DE VISITAS
+==================================================
+
+Criar formulário de solicitação de visita:
+- Nome.
+- Telefone.
+- E-mail opcional.
+- Imóvel de interesse.
+- Data e horário sugeridos.
+- Mensagem.
+- Melhor horário para contato opcional.
+
+Ao enviar:
+1. Registrar no Firestore.
+2. Guardar imóvel de interesse.
+3. Guardar página de origem, data, horário e UTMs.
+4. Exibir confirmação.
+5. Oferecer WhatsApp apenas se o número oficial estiver cadastrado.
+
+O envio é uma solicitação, não confirmação automática da visita. Não inventar telefone ou WhatsApp.
+
+Mensagem sugerida:
+“Olá, Pâmela! Vi um imóvel no seu site e gostaria de mais informações e de agendar uma visita.”
+
+Permitir mensagem personalizada por imóvel.
+
+==================================================
+9. PAINEL ADMINISTRATIVO
+==================================================
+
+O painel é uma área privada de gerenciamento do site, acessada pelo link “Painel Admin”.
+
+Autenticação:
+- Firebase Authentication.
+- Login, logout e recuperação de senha.
+- Proteção de rotas.
+- Permissões por função.
+- Sessões seguras.
+- Primeiro administrador provisionado de forma segura por procedimento documentado ou variável protegida.
+- Não inserir senha padrão no frontend, no repositório ou no código público.
+
+Dashboard:
+- Total de imóveis publicados.
+- À venda e para locação.
+- Destaques.
+- Leads.
+- Solicitações de visita.
+- Cliques em WhatsApp.
+- Visualizações por imóvel.
+- Páginas mais acessadas.
+- Origem de visitantes.
+- Conversão por campanha.
+
+Gerenciamento de imóveis:
+Cadastrar, editar, excluir, duplicar, publicar, despublicar, destacar, ordenar, atualizar preço e disponibilidade, gerenciar fotos, pré-visualizar e gerar URL amigável.
+
+Campos:
+Título, slug, código, tipo, venda/locação, preço, condomínio, região, endereço privado, área, dormitórios, suítes, banheiros, lavabo, vagas, depósito, mobiliado, varanda gourmet, sala ampliada, descrição, características, galeria, capa, status, destaque e data de publicação.
+
+O endereço privado nunca deverá ser publicado automaticamente.
+
+Gerenciamento de leads:
+Pesquisar, filtrar por imóvel e período, abrir detalhes, adicionar observações, atualizar status e exportar com controle de acesso.
+
+Status:
+Novo, em atendimento, visita solicitada, visita confirmada, aguardando retorno, proposta em andamento, convertido e não convertido.
+
+Gerenciamento do site:
+Editar apresentação, logo, fotos, cores, fontes, banners, textos, menus, redes sociais, telefone, WhatsApp, e-mail, SEO, rodapé e avisos legais.
+
+Gerenciamento de páginas:
+Criar, editar, duplicar, publicar e despublicar páginas institucionais e campanhas.
+
+==================================================
+10. LANDING PAGES
+==================================================
+
+Permitir criar páginas comerciais específicas para imóveis e campanhas, compartilháveis em Instagram, Facebook, WhatsApp e anúncios.
+
+Exemplos:
+- /oportunidade/alpha-vita
+- /oportunidade/jardins-de-tambore
+- /campanha/imoveis-alphaville
+
+Cada página poderá ter banner, foto, título, texto, preço confirmado, características confirmadas, galeria, formulário, botão de contato configurado, SEO, Open Graph e rastreamento UTM.
+
+Permitir criar, editar, duplicar, publicar, pausar e excluir.
+
+==================================================
+11. FIREBASE AUTHENTICATION E FIRESTORE
+==================================================
+
+Usar Firebase Authentication e Firestore.
+
+Coleções sugeridas:
+- siteSettings
+- professionalProfile
+- properties
+- propertyCategories
+- leads
+- visitRequests
+- landingPages
+- campaigns
+- testimonials
+- blogPosts
+- analytics
+- adminUsers
+
+Regras:
+- Público acessa apenas imóveis e páginas publicados.
+- Público não acessa leads nem dados administrativos.
+- Apenas administradores autorizados alteram conteúdo.
+- Validar permissões no backend também.
+- Não expor chaves privadas.
+- Não confiar apenas em verificações no frontend.
+
+==================================================
+12. VERCEL BLOB
+==================================================
+
+Utilizar Vercel Blob para fotos dos imóveis, vídeos compatíveis, logo, banners, fotografias profissionais e imagens de campanha.
+
+Criar gerenciador de mídia:
+- Upload individual e múltiplo.
+- Pré-visualização.
+- Seleção de capa.
+- Ordenação de galeria.
+- Substituição e exclusão.
+- Organização por imóvel/categoria.
+
+Utilizar upload seguro autorizado pelo servidor. Não expor tokens privados. Guardar URLs e metadados no Firestore. Otimizar imagens para carregamento rápido e diferentes telas.
+
+==================================================
+13. ANALYTICS E GOOGLE
+==================================================
+
+Preparar integração com:
+- Google Analytics 4.
+- Google Tag Manager.
+- Google Search Console.
+- Google Ads.
+
+Medir visitas, visualizações de imóveis, cliques em agendamento, cliques no WhatsApp, formulários, imóveis mais procurados, origem, campanhas, UTMs e conversões.
+
+Não alegar que é possível identificar todas as pessoas que pesquisam imóveis no Google. Captar leads somente por interações e integrações oficiais autorizadas.
+
+==================================================
+14. WEB DESIGNER AI PRO — BIBLIOTECAS VISUAIS
+==================================================
+
+Atue como desenvolvedor frontend sênior especializado em sites premium.
+
+Fontes de componentes e efeitos:
+React Bits: https://www.reactbits.dev/
+Magic UI: https://magicui.design/
+Aceternity UI: https://ui.aceternity.com/
+21st.dev: https://21st.dev/
+
+Consulte as bibliotecas e incorpore componentes reais sempre que fizer sentido.
+
+Procure utilizar:
+1. Animações profissionais de entrada e saída.
+2. Partículas e iluminação.
+3. Textos animados e digitação.
+4. Efeitos 3D e parallax.
+5. Fundos animados e gradientes.
+6. Botões interativos.
+7. Cards com hover.
+8. Animações durante a rolagem.
+9. Menus modernos.
+10. Transições suaves.
+
+REGRAS:
+- Não apenas imitar efeitos: utilizar componentes originais sempre que possível.
+- Consultar documentação oficial.
+- Analisar a tecnologia antes de instalar dependências.
+- Adaptar ao código existente.
+- Não remover funcionalidades.
+- Não quebrar mobile.
+- Evitar lentidão.
+- Preferir componentes gratuitos.
+- Não instalar tudo indiscriminadamente.
+- Escolher efeitos coerentes com o projeto.
+- Testar após implementar.
+
+Efeitos adequados: hero com revelação de imagem, tipografia editorial animada, cards imobiliários elegantes, galerias fluidas, parallax sutil em arquitetura, microinterações, animações discretas ao rolar e menus sofisticados. Contadores somente com dados reais. Preservar legibilidade, velocidade e acessibilidade.
+
+==================================================
+15. CATÁLOGO WEB_DESIGNER_SKILLS.MD
+==================================================
+
+Criar arquivo permanente WEB_DESIGNER_SKILLS.md com bibliotecas, links oficiais, componentes, categorias, descrições, dependências, compatibilidade, instalação, exemplos, efeitos disponíveis e recomendações futuras.
+
+Organizar em:
+1. Hero e banners.
+2. Navegação.
+3. Botões.
+4. Cards imobiliários.
+5. Busca e filtros.
+6. Formulários.
+7. Animações.
+8. Fundos.
+9. Efeitos 3D.
+10. Tipografia.
+11. Galerias.
+12. Mapas.
+13. Gráficos.
+14. Painel administrativo.
+15. Conversão.
+
+==================================================
+16. RESPONSIVIDADE E ACESSIBILIDADE
+==================================================
+
+Compatibilidade perfeita com Android, iPhone, tablets, notebooks e desktops. Prioridade mobile.
+
+Garantir menu adaptado, botões confortáveis, filtros fáceis, galeria responsiva, imagens sem cortes inadequados, tipografia legível, ausência de rolagem horizontal, contraste adequado, navegação por teclado, textos alternativos e respeito à preferência por movimento reduzido.
+
+==================================================
+17. SEO
+==================================================
+
+Implementar títulos e descrições personalizados, URLs amigáveis, sitemap XML, robots.txt, Open Graph, imagens de compartilhamento, dados estruturados adequados, canonical URLs, otimização de imagens, links internos e SEO por imóvel, venda, locação e região.
+
+Termos relevantes:
+- Imóveis em Alphaville.
+- Apartamentos em Alphaville.
+- Imóveis à venda em Alphaville.
+- Imóveis para alugar em Alphaville.
+- Jardins de Tamboré.
+- Alpha Vita.
+- Corretora de imóveis em Alphaville.
+
+Usar nomes de regiões e condomínios apenas quando relacionados ao imóvel. Não inventar endereço.
+
+==================================================
+18. LGPD E SEGURANÇA
+==================================================
+
+Implementar política de privacidade, aviso de cookies quando aplicável, coleta mínima de dados, transparência, proteção contra spam, validação no backend, proteção dos leads, permissões e registro de ações administrativas.
+
+Não publicar dados pessoais de proprietários, moradores ou interessados. Não expor endereços privados sem autorização. Usar fotos somente com autorização. Não copiar conteúdo de terceiros sem permissão. Não criar depoimentos, avaliações, imóveis, preços ou características fictícias.
+
+==================================================
+19. TECNOLOGIA E DEPLOY
+==================================================
+
+Utilizar arquitetura moderna compatível com Google AI Studio e Vercel:
+- React.
+- TypeScript.
+- Tailwind CSS ou CSS moderno.
+- Firebase Authentication.
+- Firebase Firestore.
+- Vercel Blob.
+- APIs seguras no backend.
+- Bibliotecas visuais selecionadas.
+
+Preparar package.json, configuração de build, rotas, backend, variáveis de ambiente de exemplo, integrações e documentação.
+
+Criar README.md explicando instalação, configuração Firebase, Authentication, Firestore, regras de segurança, Vercel Blob, variáveis de ambiente, provisionamento do administrador, execução local, deploy na Vercel, domínio e testes.
+
+Nunca inserir segredos reais no código público.
+
+==================================================
+20. TESTES OBRIGATÓRIOS
+==================================================
+
+Testar homepage, comprar, alugar, busca, filtros, página de imóvel, galeria, formulários, agendamento, redes sociais, WhatsApp após configuração, login, recuperação de senha, permissões, cadastro/edição de imóveis, publicação, upload, landing pages, leads, relatórios, SEO, responsividade, acessibilidade, segurança e build de produção.
+
+Corrigir os erros. Não simular integrações. Se faltar credencial externa, deixar a integração preparada e documentar o que falta.
+
+==================================================
+21. ORDEM DE EXECUÇÃO
+==================================================
+
+FASE 1 — Analisar as referências e organizar dados confirmados.
+FASE 2 — Criar branding premium para Pâmela Boccaletti.
+FASE 3 — Construir site público e páginas.
+FASE 4 — Implementar busca e filtros.
+FASE 5 — Implementar leads e agendamento.
+FASE 6 — Configurar Firebase e Blob.
+FASE 7 — Criar painel administrativo.
+FASE 8 — Criar landing pages.
+FASE 9 — Implementar analytics e SEO.
+FASE 10 — Incorporar componentes visuais originais.
+FASE 11 — Testar, corrigir e preparar deploy.
+
+Não parar em protótipo. Não entregar apenas homepage estática. Não deixar botões sem ação. Não inventar imóveis. Não misturar características de anúncios diferentes. Não publicar preço ou disponibilidade antigos sem confirmação.
+
+==================================================
+22. RESULTADO FINAL
+==================================================
+
+Entregar site imobiliário premium para:
+
+PÂMELA BOCCALETTI
+Imóveis em Alphaville/SP
+Atendimento Exclusivo.
+
+Instagram: @pamelaboccaletti
+Facebook: Pamela Boccaletti
+
+Referências de anúncios a confirmar antes de publicação:
+- Alpha Vita — venda anunciada por R$ 1.940.000,00.
+- Jardins de Tamboré — 100 m², 3 dormitórios, 2 suítes, lavabo, 2 vagas e depósito no andar; venda anunciada por R$ 1.100.000,00.
+- Jardins de Tamboré — 100 m², 1 suíte, lavabo, 2 vagas, totalmente mobiliado; locação anunciada por R$ 6.900,00/mês.
+- Outra publicação menciona 100 m², 2 suítes, 2 vagas, sala ampliada e varanda gourmet; confirmar a qual imóvel pertence.
+
+Todos os valores e características acima são históricos e precisam ser confirmados pela corretora antes de irem ao ar.
+
+O resultado deverá ser elegante, rápido, seguro, responsivo e fácil de administrar, com imóveis para venda e locação, busca, filtros, galerias, páginas individuais, agendamento, captação de leads, landing pages, painel administrativo, Firebase, Vercel Blob, relatórios e SEO.
+
+Prioridade absoluta: valorizar a marca pessoal de Pâmela Boccaletti, destacar sua atuação em Alphaville/SP e oferecer uma experiência digital imobiliária de alto padrão.
