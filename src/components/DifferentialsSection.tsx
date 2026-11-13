@@ -32,7 +32,7 @@ export const DifferentialsSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-[#fbf9f5] relative overflow-hidden">
+    <section className="py-20 bg-[#FAF7F2] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,13 +41,13 @@ export const DifferentialsSection: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <span className="text-xs uppercase tracking-[0.25em] text-[#819885] font-semibold block mb-2">
+          <span className="text-xs uppercase tracking-[0.25em] text-[#586E5E] font-semibold block mb-2">
             Padrão de Atendimento
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#192b20] font-light">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#2D3B32] font-light">
             Diferenciais de um serviço dedicado
           </h2>
-          <p className="mt-4 text-sm text-[#192b20]/75 font-light leading-relaxed">
+          <p className="mt-4 text-sm text-[#2D3B32]/80 font-light leading-relaxed">
             A busca pelo imóvel ideal em Alphaville deve ser uma experiência tranquila, segura e
             orientada às suas reais necessidades.
           </p>
@@ -66,15 +66,15 @@ export const DifferentialsSection: React.FC = () => {
                 className="h-full"
               >
                 <Card3D intensity={6} className="h-full">
-                  <div className="bg-white border border-[#e8e2d9] p-6 rounded-sm hover:border-[#c5a880] transition-all duration-300 flex flex-col justify-between h-full hover:shadow-xl group">
+                  <div className="bg-white border border-[#E3DACF] p-6 rounded-lg hover:border-[#B55D3E] transition-all duration-300 flex flex-col justify-between h-full hover:shadow-xl group">
                     <div>
-                      <div className="w-10 h-10 bg-[#f0ebe1] text-[#192b20] flex items-center justify-center rounded-sm mb-4 group-hover:bg-[#192b20] group-hover:text-[#c5a880] transition-colors duration-300">
-                        <Icon className="w-5 h-5 text-[#c5a880]" />
+                      <div className="w-10 h-10 bg-[#E6ECE6] text-[#9B4D32] flex items-center justify-center rounded-lg mb-4 group-hover:bg-[#586E5E] group-hover:text-[#FAF7F2] transition-colors duration-300">
+                        <Icon className="w-5 h-5" />
                       </div>
-                      <h3 className="font-serif text-lg font-medium text-[#192b20] mb-2">
+                      <h3 className="font-serif text-lg font-medium text-[#2D3B32] mb-2">
                         {diff.title}
                       </h3>
-                      <p className="text-xs text-[#192b20]/75 leading-relaxed">
+                      <p className="text-xs text-[#2D3B32]/80 leading-relaxed">
                         {diff.description}
                       </p>
                     </div>

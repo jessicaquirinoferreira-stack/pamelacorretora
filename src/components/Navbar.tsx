@@ -49,8 +49,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#192b20]/95 backdrop-blur-md text-[#fbf9f5] shadow-lg py-3'
-            : 'bg-gradient-to-b from-[#192b20]/90 to-transparent text-[#fbf9f5] py-5'
+            ? 'bg-[#2D3B32]/95 backdrop-blur-md text-[#FAF7F2] shadow-lg py-3'
+            : 'bg-gradient-to-b from-[#2D3B32]/95 to-transparent text-[#FAF7F2] py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,15 +79,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`text-sm tracking-wider uppercase transition-colors relative py-1 ${
+                  className={`text-sm tracking-wider uppercase transition-colors relative py-1 cursor-pointer ${
                     activeSection === item.id
-                      ? 'text-[#c5a880] font-medium'
-                      : 'text-[#fbf9f5]/80 hover:text-[#fbf9f5]'
+                      ? 'text-[#E29578] font-medium'
+                      : 'text-[#FAF7F2]/90 hover:text-[#FAF7F2]'
                   }`}
                 >
                   {item.label}
                   {activeSection === item.id && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c5a880]" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E29578]" />
                   )}
                 </button>
               ))}
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Instagram @pamelaboccaletti"
-                className="p-2 text-[#fbf9f5]/70 hover:text-[#c5a880] transition-colors"
+                className="p-2 text-[#FAF7F2]/85 hover:text-[#E29578] transition-colors"
                 aria-label="Instagram de Pâmela Boccaletti"
               >
                 <Instagram className="w-5 h-5" />
@@ -111,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Facebook Pamela Boccaletti"
-                className="p-2 text-[#fbf9f5]/70 hover:text-[#c5a880] transition-colors"
+                className="p-2 text-[#FAF7F2]/85 hover:text-[#E29578] transition-colors"
                 aria-label="Facebook de Pamela Boccaletti"
               >
                 <Facebook className="w-5 h-5" />
@@ -119,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <button
                 onClick={() => onOpenBooking()}
-                className="inline-flex items-center gap-2 bg-[#c5a880] hover:bg-[#b8976b] text-[#192b20] px-5 py-2.5 rounded-full text-xs tracking-wider uppercase font-semibold transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-2 bg-[#B55D3E] hover:bg-[#9B4D32] text-[#FAF7F2] px-5 py-2.5 rounded-full text-xs tracking-wider uppercase font-semibold transition-all shadow-sm hover:shadow active:scale-95 cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 Agendar Visita
@@ -129,7 +129,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={onOpenAdmin}
                 title={user ? (isAdmin ? 'Painel Admin' : 'Conta Conectada') : 'Acesso Restrito'}
-                className="p-2 text-[#fbf9f5]/50 hover:text-[#c5a880] transition-colors"
+                className="p-2 text-[#FAF7F2]/70 hover:text-[#E29578] transition-colors cursor-pointer"
                 aria-label="Acesso ao Painel Administrativo"
               >
                 <Lock className="w-4 h-4" />
@@ -140,13 +140,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex sm:hidden items-center space-x-2">
               <button
                 onClick={() => onOpenBooking()}
-                className="bg-[#c5a880] text-[#192b20] px-3 py-1.5 rounded-sm text-xs font-semibold uppercase tracking-wider"
+                className="bg-[#B55D3E] hover:bg-[#9B4D32] text-[#FAF7F2] px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider cursor-pointer"
               >
                 Visita
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-[#fbf9f5] hover:text-[#c5a880] transition-colors"
+                className="p-2 text-[#FAF7F2] hover:text-[#E29578] transition-colors cursor-pointer"
                 aria-label="Menu Principal"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -157,16 +157,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#192b20] border-t border-[#3b5242] px-4 pt-3 pb-6 space-y-3 mt-3 shadow-xl">
+          <div className="lg:hidden bg-[#2D3B32] border-t border-[#4D6254] px-4 pt-3 pb-6 space-y-3 mt-3 shadow-xl">
             <div className="grid grid-cols-1 gap-2">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`text-left py-2 px-3 text-sm tracking-wider uppercase rounded-sm transition-colors ${
+                  className={`text-left py-2 px-3 text-sm tracking-wider uppercase rounded-lg transition-colors ${
                     activeSection === item.id
-                      ? 'bg-[#243d2e] text-[#c5a880] font-medium'
-                      : 'text-[#fbf9f5]/80 hover:bg-[#243d2e] hover:text-[#fbf9f5]'
+                      ? 'bg-[#3B4D41] text-[#E29578] font-medium'
+                      : 'text-[#FAF7F2]/90 hover:bg-[#3B4D41] hover:text-[#FAF7F2]'
                   }`}
                 >
                   {item.label}
@@ -174,13 +174,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               ))}
             </div>
 
-            <div className="pt-4 border-t border-[#243d2e] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#3B4D41] flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <a
                   href="https://www.instagram.com/pamelaboccaletti/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#c5a880] p-1.5 text-xs flex items-center gap-1.5"
+                  className="text-[#E29578] p-1.5 text-xs flex items-center gap-1.5"
                 >
                   <Instagram className="w-4 h-4" />
                   @pamelaboccaletti
@@ -191,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   setMobileMenuOpen(false);
                   onOpenAdmin();
                 }}
-                className="text-xs text-[#fbf9f5]/60 flex items-center gap-1.5 hover:text-[#c5a880]"
+                className="text-xs text-[#FAF7F2]/80 flex items-center gap-1.5 hover:text-[#E29578] cursor-pointer"
               >
                 <Lock className="w-3.5 h-3.5" />
                 Painel Admin

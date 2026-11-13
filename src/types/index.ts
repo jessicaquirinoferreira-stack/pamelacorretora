@@ -26,6 +26,7 @@ export interface Property {
   features: string[];
   coverImage: string;
   gallery: string[];
+  videos?: string[];
   status: PropertyStatus;
   featured: boolean;
   pendingConfirmation: boolean;
@@ -68,6 +69,7 @@ export interface Lead {
 export interface SiteSettings {
   professionalName: string;
   logoUrl?: string;
+  aboutImageUrl?: string;
   bioTagline: string;
   bioDescription: string;
   region: string;
@@ -81,6 +83,7 @@ export interface SiteSettings {
   heroHeadline: string;
   heroSubheadline: string;
   legalDisclaimers: string;
+  initialized?: boolean;
   updatedAt: string;
 }
 
@@ -92,6 +95,10 @@ export interface LandingPage {
   subheadline: string;
   propertyId: string;
   coverImage: string;
+  gallery?: string[];
+  videoUrl?: string;
+  ctaText?: string;
+  badgeText?: string;
   features: string[];
   status: 'draft' | 'published';
   createdAt: string;

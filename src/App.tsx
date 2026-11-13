@@ -1,25 +1,59 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider, useData } from './context/DataContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PropertyCard } from './components/PropertyCard';
-import { PropertyDetailModal } from './components/PropertyDetailModal';
-import { VisitBookingModal } from './components/VisitBookingModal';
-import { AboutSection } from './components/AboutSection';
-import { DifferentialsSection } from './components/DifferentialsSection';
-import { AlphavilleGuide } from './components/AlphavilleGuide';
-import { LandingPagesSection } from './components/LandingPagesSection';
 import { Footer } from './components/Footer';
-import { AdminDashboard } from './components/AdminPanel/AdminDashboard';
-import { Property } from './types';
+import { LandingPage, Property } from './types';
 import { testConnection } from './lib/firebase';
-import { Filter, ArrowUpDown, Sparkles, Building2, Calendar, Phone, Check } from 'lucide-react';
+import { Sparkles, Building2, Calendar, Phone } from 'lucide-react';
 import { motion } from 'motion/react';
-import { FloatingContactBar } from './components/ui/FloatingContactBar';
+import { FloatingSocialButtons } from './components/ui/FloatingSocialButtons';
+import { VirtualAssistant } from './components/ui/VirtualAssistant';
+import { CinematicIntro } from './components/ui/CinematicIntro';
+
+const AboutSection = lazy(() =>
+  import('./components/AboutSection').then((m) => ({ default: m.AboutSection }))
+);
+const DifferentialsSection = lazy(() =>
+  import('./components/DifferentialsSection').then((m) => ({ default: m.DifferentialsSection }))
+);
+const AlphavilleGuide = lazy(() =>
+  import('./components/AlphavilleGuide').then((m) => ({ default: m.AlphavilleGuide }))
+);
+const LandingPagesSection = lazy(() =>
+  import('./components/LandingPagesSection').then((m) => ({ default: m.LandingPagesSection }))
+);
+const PropertyDetailModal = lazy(() =>
+  import('./components/PropertyDetailModal').then((m) => ({ default: m.PropertyDetailModal }))
+);
+const VisitBookingModal = lazy(() =>
+  import('./components/VisitBookingModal').then((m) => ({ default: m.VisitBookingModal }))
+);
+const AdminDashboard = lazy(() =>
+  import('./components/AdminPanel/AdminDashboard').then((m) => ({ default: m.AdminDashboard }))
+);
+const LandingPageView = lazy(() =>
+  import('./components/LandingPageView').then((m) => ({ default: m.LandingPageView }))
+);
+
+function getInitialLpSlugFromUrl(): string | null {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const qp = params.get('lp');
+    if (qp) return qp;
+    if (window.location.hash.startsWith('#lp/')) {
+      return decodeURIComponent(window.location.hash.replace('#lp/', ''));
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
 
 function MainApp() {
-  const { properties, siteSettings } = useData();
+  const { properties, siteSettings, landingPages } = useData();
 
   // Test Firestore connection on app mount
   useEffect(() => {
@@ -32,6 +66,22 @@ function MainApp() {
   const [bookingProp, setBookingProp] = useState<{ id: string; title: string } | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
+  const [activeLandingPageSlug, setActiveLandingPageSlug] = useState<string | null>(() =>
+    getInitialLpSlugFromUrl()
+  );
+  const [showIntro, setShowIntro] = useState<boolean>(() => !getInitialLpSlugFromUrl());
+
+  useEffect(() => {
+    const syncFromLocation = () => {
+      setActiveLandingPageSlug(getInitialLpSlugFromUrl());
+    };
+    window.addEventListener('popstate', syncFromLocation);
+    window.addEventListener('hashchange', syncFromLocation);
+    return () => {
+      window.removeEventListener('popstate', syncFromLocation);
+      window.removeEventListener('hashchange', syncFromLocation);
+    };
+  }, []);
 
   // Properties Filter State
   const [filterTransaction, setFilterTransaction] = useState<'all' | 'sale' | 'rent'>('all');
@@ -111,8 +161,61 @@ function MainApp() {
       return a.order - b.order;
     });
 
+  const handleOpenLandingPage = (lp: LandingPage) => {
+    setActiveLandingPageSlug(lp.slug);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('lp', lp.slug);
+      window.history.pushState({}, '', url.toString());
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCloseLandingPage = () => {
+    setActiveLandingPageSlug(null);
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('lp');
+      url.hash = '';
+      window.history.pushState({}, '', url.toString());
+    } catch {
+      // ignore
+    }
+  };
+
+  const activeLandingPage = activeLandingPageSlug
+    ? landingPages.find((lp) => lp.slug === activeLandingPageSlug)
+    : undefined;
+
+  if (activeLandingPage) {
+    const linkedProp = properties.find((p) => p.id === activeLandingPage.propertyId);
+    return (
+      <>
+        <Suspense fallback={<div className="min-h-screen bg-[#FAF7F2]" />}>
+          <LandingPageView
+            landingPage={activeLandingPage}
+            property={linkedProp}
+            onExit={handleCloseLandingPage}
+            onOpenBooking={(id, title) => handleOpenBooking(id, title)}
+          />
+          {isBookingOpen && (
+            <VisitBookingModal
+              isOpen={isBookingOpen}
+              onClose={() => setIsBookingOpen(false)}
+              preselectedProperty={bookingProp}
+            />
+          )}
+        </Suspense>
+        <FloatingSocialButtons onOpenBooking={() => handleOpenBooking()} />
+      </>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f5] text-[#192b20]">
+    <div className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#2D3B32]">
+      {showIntro && <CinematicIntro onComplete={() => setShowIntro(false)} />}
       {/* Fixed Luxury Navigation */}
       <Navbar
         activeSection={activeSection}
@@ -142,16 +245,16 @@ function MainApp() {
         className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full"
       >
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-[#e8e2d9] gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-[#E3DACF] gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.25em] text-[#819885] font-semibold mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#c5a880]" />
+            <div className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.25em] text-[#586E5E] font-semibold mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#9B4D32]" />
               Catálogo Exclusivo
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#192b20] font-light">
+            <h2 className="font-serif text-3xl sm:text-4xl text-[#2D3B32] font-light">
               Imóveis Selecionados em Alphaville
             </h2>
-            <p className="text-xs text-[#192b20]/70 mt-1">
+            <p className="text-xs text-[#2D3B32]/80 mt-1">
               Exibindo {filteredProperties.length} de {properties.length} imóveis cadastrados
             </p>
           </div>
@@ -160,30 +263,30 @@ function MainApp() {
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setFilterTransaction('all')}
-              className={`text-xs uppercase tracking-wider font-semibold px-3 py-1.5 rounded-sm transition-all ${
+              className={`text-xs uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full transition-all cursor-pointer ${
                 filterTransaction === 'all'
-                  ? 'bg-[#192b20] text-[#fbf9f5] shadow-xs'
-                  : 'bg-white border border-[#e8e2d9] text-[#192b20]/70 hover:text-[#192b20]'
+                  ? 'bg-[#586E5E] text-[#FAF7F2] shadow-xs'
+                  : 'bg-white border border-[#E3DACF] text-[#2D3B32]/85 hover:text-[#2D3B32] hover:border-[#586E5E]'
               }`}
             >
               Todos
             </button>
             <button
               onClick={() => setFilterTransaction('sale')}
-              className={`text-xs uppercase tracking-wider font-semibold px-3 py-1.5 rounded-sm transition-all ${
+              className={`text-xs uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full transition-all cursor-pointer ${
                 filterTransaction === 'sale'
-                  ? 'bg-[#192b20] text-[#fbf9f5] shadow-xs'
-                  : 'bg-white border border-[#e8e2d9] text-[#192b20]/70 hover:text-[#192b20]'
+                  ? 'bg-[#586E5E] text-[#FAF7F2] shadow-xs'
+                  : 'bg-white border border-[#E3DACF] text-[#2D3B32]/85 hover:text-[#2D3B32] hover:border-[#586E5E]'
               }`}
             >
               À Venda
             </button>
             <button
               onClick={() => setFilterTransaction('rent')}
-              className={`text-xs uppercase tracking-wider font-semibold px-3 py-1.5 rounded-sm transition-all ${
+              className={`text-xs uppercase tracking-wider font-semibold px-4 py-1.5 rounded-full transition-all cursor-pointer ${
                 filterTransaction === 'rent'
-                  ? 'bg-[#192b20] text-[#fbf9f5] shadow-xs'
-                  : 'bg-white border border-[#e8e2d9] text-[#192b20]/70 hover:text-[#192b20]'
+                  ? 'bg-[#586E5E] text-[#FAF7F2] shadow-xs'
+                  : 'bg-white border border-[#E3DACF] text-[#2D3B32]/85 hover:text-[#2D3B32] hover:border-[#586E5E]'
               }`}
             >
               Para Locação
@@ -193,18 +296,27 @@ function MainApp() {
             <select
               value={filterCondo}
               onChange={(e) => setFilterCondo(e.target.value)}
-              className="bg-white border border-[#e8e2d9] text-xs text-[#192b20] px-3 py-1.5 rounded-sm focus:outline-none focus:border-[#192b20]"
+              className="bg-white border border-[#E3DACF] text-xs text-[#2D3B32] px-4 py-1.5 rounded-full focus:outline-none focus:border-[#586E5E]"
             >
               <option value="all">Condomínio (Todos)</option>
-              <option value="Alpha Vita">Alpha Vita</option>
-              <option value="Jardins de Tamboré">Jardins de Tamboré</option>
+              {Array.from(
+                new Set(
+                  properties
+                    .filter((p) => p.status === 'published' && p.condominiumName)
+                    .map((p) => p.condominiumName)
+                )
+              ).map((condo) => (
+                <option key={condo} value={condo}>
+                  {condo}
+                </option>
+              ))}
             </select>
 
             {/* Sorting */}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-white border border-[#e8e2d9] text-xs text-[#192b20] px-3 py-1.5 rounded-sm focus:outline-none focus:border-[#192b20]"
+              className="bg-white border border-[#E3DACF] text-xs text-[#2D3B32] px-4 py-1.5 rounded-full focus:outline-none focus:border-[#586E5E]"
             >
               <option value="recent">Mais Recentes</option>
               <option value="price-asc">Menor Preço</option>
@@ -216,10 +328,10 @@ function MainApp() {
 
         {/* Properties Grid */}
         {filteredProperties.length === 0 ? (
-          <div className="bg-white border border-[#e8e2d9] rounded-sm p-12 text-center max-w-md mx-auto my-8">
-            <Building2 className="w-10 h-10 text-[#819885] mx-auto mb-3" />
-            <h3 className="font-serif text-xl font-medium mb-1">Nenhum imóvel encontrado</h3>
-            <p className="text-xs text-[#192b20]/70 mb-4">
+          <div className="bg-white border border-[#E3DACF] rounded-lg p-12 text-center max-w-md mx-auto my-8">
+            <Building2 className="w-10 h-10 text-[#586E5E] mx-auto mb-3" />
+            <h3 className="font-serif text-xl font-medium text-[#2D3B32] mb-1">Nenhum imóvel encontrado</h3>
+            <p className="text-xs text-[#2D3B32]/80 mb-4">
               Tente redefinir os filtros de condomínio ou valor para visualizar mais opções.
             </p>
             <button
@@ -229,7 +341,7 @@ function MainApp() {
                 setFilterBedrooms('all');
                 setFilterMaxPrice('all');
               }}
-              className="bg-[#192b20] text-[#fbf9f5] text-xs uppercase tracking-wider font-semibold px-4 py-2 rounded-sm"
+              className="bg-[#2D3B32] hover:bg-[#3B4D41] text-[#FAF7F2] text-xs uppercase tracking-wider font-semibold px-5 py-2.5 rounded-full cursor-pointer transition-colors"
             >
               Limpar Filtros
             </button>
@@ -260,36 +372,39 @@ function MainApp() {
         )}
       </section>
 
-      {/* Differentials Section */}
-      <DifferentialsSection />
+      <Suspense fallback={null}>
+        {/* Differentials Section */}
+        <DifferentialsSection />
 
-      {/* About Pâmela Boccaletti Section */}
-      <AboutSection onOpenBooking={() => handleOpenBooking()} />
+        {/* About Pâmela Boccaletti Section */}
+        <AboutSection onOpenBooking={() => handleOpenBooking()} />
 
-      {/* Alphaville Guide (Alpha Vita & Jardins de Tamboré) */}
-      <AlphavilleGuide
-        onFilterCondominium={(condoName) => {
-          setFilterCondo(condoName);
-          propertiesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-        }}
-      />
+        {/* Alphaville Guide (Alpha Vita & Jardins de Tamboré) */}
+        <AlphavilleGuide
+          onFilterCondominium={(condoName) => {
+            setFilterCondo(condoName);
+            propertiesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
 
-      {/* Landing Pages / Campaign Showcase */}
-      <LandingPagesSection
-        onSelectProperty={(prop) => setSelectedProperty(prop)}
-        onOpenBooking={(id, title) => handleOpenBooking(id, title)}
-      />
+        {/* Landing Pages / Campaign Showcase */}
+        <LandingPagesSection
+          onSelectProperty={(prop) => setSelectedProperty(prop)}
+          onOpenLandingPage={(lp) => handleOpenLandingPage(lp)}
+          onOpenBooking={(id, title) => handleOpenBooking(id, title)}
+        />
+      </Suspense>
 
       {/* Inline Direct Contact Section */}
-      <section id="contato" className="py-16 bg-[#f0ebe1] border-t border-[#e8e2d9]">
+      <section id="contato" className="py-16 bg-[#F3EDE4] border-t border-[#E3DACF]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <span className="text-xs uppercase tracking-[0.25em] text-[#819885] font-semibold block">
+          <span className="text-xs uppercase tracking-[0.25em] text-[#586E5E] font-semibold block">
             Fale com a Corretora
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#192b20] font-light">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#2D3B32] font-light">
             Atendimento Pessoal e Personalizado
           </h2>
-          <p className="text-xs sm:text-sm text-[#192b20]/75 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#2D3B32]/85 max-w-xl mx-auto leading-relaxed">
             Prefere tirar dúvidas antes de agendar uma visita? Envie uma mensagem e receba a atenção
             exclusiva que seu momento de decisão merece.
           </p>
@@ -297,9 +412,9 @@ function MainApp() {
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <button
               onClick={() => handleOpenBooking()}
-              className="bg-[#192b20] hover:bg-[#243d2e] text-[#fbf9f5] font-semibold text-xs uppercase tracking-wider py-3 px-6 rounded-sm shadow-md transition-all flex items-center gap-2"
+              className="bg-[#2D3B32] hover:bg-[#3B4D41] text-[#FAF7F2] font-semibold text-xs uppercase tracking-wider py-3 px-6 rounded-full shadow-md transition-all flex items-center gap-2 cursor-pointer"
             >
-              <Calendar className="w-4 h-4 text-[#c5a880]" />
+              <Calendar className="w-4 h-4 text-[#E29578]" />
               Solicitar Agendamento de Visita
             </button>
 
@@ -310,7 +425,7 @@ function MainApp() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#c5a880] hover:bg-[#b8976b] text-[#192b20] font-semibold text-xs uppercase tracking-wider py-3 px-6 rounded-sm shadow-md transition-all flex items-center gap-2"
+                className="bg-[#B55D3E] hover:bg-[#9B4D32] text-[#FAF7F2] font-semibold text-xs uppercase tracking-wider py-3 px-6 rounded-full shadow-md transition-all flex items-center gap-2"
               >
                 <Phone className="w-4 h-4" />
                 Conversar pelo WhatsApp
@@ -327,31 +442,46 @@ function MainApp() {
         onOpenBooking={() => handleOpenBooking()}
       />
 
-      {/* Detail Modal */}
-      <PropertyDetailModal
-        property={selectedProperty}
-        onClose={() => setSelectedProperty(null)}
-        onBookVisit={(prop) => {
-          setSelectedProperty(null);
-          handleOpenBooking(prop.id, prop.title);
-        }}
+      <Suspense fallback={null}>
+        {/* Detail Modal */}
+        {selectedProperty && (
+          <PropertyDetailModal
+            property={selectedProperty}
+            onClose={() => setSelectedProperty(null)}
+            onBookVisit={(prop) => {
+              setSelectedProperty(null);
+              handleOpenBooking(prop.id, prop.title);
+            }}
+          />
+        )}
+
+        {/* Visit Booking Modal */}
+        {isBookingOpen && (
+          <VisitBookingModal
+            isOpen={isBookingOpen}
+            onClose={() => setIsBookingOpen(false)}
+            preselectedProperty={bookingProp}
+          />
+        )}
+
+        {/* Admin Panel Dashboard */}
+        {isAdminOpen && (
+          <AdminDashboard
+            isOpen={isAdminOpen}
+            onClose={() => setIsAdminOpen(false)}
+            onPreviewLandingPage={(lp) => handleOpenLandingPage(lp)}
+          />
+        )}
+      </Suspense>
+
+      {/* Left-Side Virtual Assistant (Clara) */}
+      <VirtualAssistant
+        onOpenBooking={() => handleOpenBooking()}
+        onNavigate={handleNavigate}
       />
 
-      {/* Visit Booking Modal */}
-      <VisitBookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-        preselectedProperty={bookingProp}
-      />
-
-      {/* Admin Panel Dashboard */}
-      <AdminDashboard
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-      />
-
-      {/* Floating Luxury Quick Action Bar (Magic UI / 21st.dev style) */}
-      <FloatingContactBar onOpenBooking={() => handleOpenBooking()} />
+      {/* Right-Side Official Social Floating Buttons (Instagram & WhatsApp) */}
+      <FloatingSocialButtons onOpenBooking={() => handleOpenBooking()} />
     </div>
   );
 }

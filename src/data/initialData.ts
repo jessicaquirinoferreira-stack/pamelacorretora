@@ -3,6 +3,7 @@ import { Property, SiteSettings, LandingPage } from '../types';
 export const INITIAL_SITE_SETTINGS: SiteSettings = {
   professionalName: 'Pâmela Boccaletti',
   logoUrl: 'https://i.postimg.cc/bNDNFx92/Logo-Imobiliario-Dourado-Pamela-Boccaletti.png',
+  aboutImageUrl: 'https://i.postimg.cc/9QxD6mqT/Whats-App-Image-2026-11-10-at-20-40-05.jpg',
   bioTagline: 'Imóveis em Alphaville/SP · Atendimento Exclusivo',
   bioDescription:
     'Sou Pâmela Boccaletti e atuo com imóveis em Alphaville/SP. Meu compromisso é oferecer atendimento exclusivo, entender suas prioridades e acompanhar você na busca pelo imóvel ideal. Me chama e agende uma visita.',

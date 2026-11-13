@@ -97,21 +97,21 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#192b20]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fade-in">
-      <div className="bg-[#fbf9f5] w-full max-w-lg rounded-sm overflow-hidden shadow-2xl border border-[#e8e2d9] relative">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#2D3B32]/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-fade-in">
+      <div className="bg-[#FAF7F2] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl border border-[#E3DACF] relative">
         {/* Header */}
-        <div className="p-5 sm:p-6 border-b border-[#e8e2d9] flex items-center justify-between bg-[#fbf9f5]">
+        <div className="p-5 sm:p-6 border-b border-[#E3DACF] flex items-center justify-between bg-[#FAF7F2]">
           <div>
-            <span className="text-[10px] tracking-widest uppercase text-[#819885] font-semibold block">
+            <span className="text-[10px] tracking-widest uppercase text-[#586E5E] font-semibold block">
               Atendimento Exclusivo
             </span>
-            <h2 className="font-serif text-2xl text-[#192b20] font-medium leading-tight">
+            <h2 className="font-serif text-2xl text-[#2D3B32] font-medium leading-tight">
               Solicitar Agendamento de Visita
             </h2>
           </div>
           <button
             onClick={handleResetAndClose}
-            className="p-1.5 text-[#192b20]/60 hover:text-[#192b20] rounded-sm transition-colors"
+            className="p-1.5 text-[#2D3B32]/70 hover:text-[#2D3B32] hover:bg-[#F3EDE4] rounded-full transition-colors cursor-pointer"
             aria-label="Fechar"
           >
             <X className="w-5 h-5" />
@@ -122,21 +122,21 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
         <div className="p-5 sm:p-6">
           {submitted ? (
             <div className="text-center py-6 space-y-4">
-              <div className="w-14 h-14 bg-emerald-100 text-emerald-800 rounded-full mx-auto flex items-center justify-center">
-                <CheckCircle2 className="w-8 h-8" />
+              <div className="w-14 h-14 bg-[#E6ECE6] text-[#2D3B32] rounded-full mx-auto flex items-center justify-center">
+                <CheckCircle2 className="w-8 h-8 text-[#586E5E]" />
               </div>
 
-              <h3 className="font-serif text-2xl text-[#192b20] font-medium">
+              <h3 className="font-serif text-2xl text-[#2D3B32] font-medium">
                 Solicitação Recebida com Sucesso!
               </h3>
 
-              <p className="text-sm text-[#192b20]/80 max-w-md mx-auto leading-relaxed">
-                Obrigado, <strong className="text-[#192b20]">{name}</strong>. Pâmela Boccaletti
+              <p className="text-sm text-[#2D3B32]/85 max-w-md mx-auto leading-relaxed">
+                Obrigado, <strong className="text-[#2D3B32]">{name}</strong>. Pâmela Boccaletti
                 recebeu sua solicitação para o imóvel <em>"{currentPropertyTitle}"</em> e entrará em
                 contato em breve para confirmar o melhor horário.
               </p>
 
-              <div className="text-xs text-[#192b20]/60 p-3 bg-[#f0ebe1] rounded-sm">
+              <div className="text-xs text-[#2D3B32]/80 p-3 bg-[#F3EDE4] border border-[#E3DACF] rounded-lg">
                 * Lembramos que esta é uma solicitação preliminar sujeita à confirmação de agenda da
                 corretora e autorização de acesso ao condomínio.
               </div>
@@ -145,7 +145,7 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
                 <div className="pt-3">
                   <button
                     onClick={handleWhatsAppDirect}
-                    className="w-full bg-[#c5a880] hover:bg-[#b8976b] text-[#192b20] font-semibold text-xs uppercase tracking-wider py-3 px-4 rounded-sm transition-all shadow"
+                    className="w-full bg-[#B55D3E] hover:bg-[#9B4D32] text-[#FAF7F2] font-semibold text-xs uppercase tracking-wider py-3 px-4 rounded-full transition-all shadow cursor-pointer"
                   >
                     Falar agora pelo WhatsApp
                   </button>
@@ -155,7 +155,7 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
               <div className="pt-2">
                 <button
                   onClick={handleResetAndClose}
-                  className="text-xs uppercase tracking-wider text-[#192b20]/70 hover:text-[#192b20] underline"
+                  className="text-xs uppercase tracking-wider text-[#2D3B32]/80 hover:text-[#2D3B32] underline cursor-pointer"
                 >
                   Concluir e Voltar ao Site
                 </button>
@@ -164,18 +164,18 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               {errorMsg && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-800 text-xs rounded-sm">
+                <div className="p-3 bg-[#F9EBE5] border border-[#B55D3E]/50 text-[#9B4D32] text-xs rounded-lg">
                   {errorMsg}
                 </div>
               )}
 
               {/* Selected Property preview */}
               {currentPropertyTitle && (
-                <div className="p-3 bg-[#f0ebe1] border border-[#e8e2d9] rounded-sm text-xs">
-                  <span className="text-[#819885] font-semibold uppercase tracking-wider block text-[10px]">
+                <div className="p-3 bg-[#F3EDE4] border border-[#E3DACF] rounded-lg text-xs">
+                  <span className="text-[#586E5E] font-semibold uppercase tracking-wider block text-[10px]">
                     Imóvel de Interesse:
                   </span>
-                  <span className="font-medium text-[#192b20] line-clamp-1">
+                  <span className="font-medium text-[#2D3B32] line-clamp-1">
                     {currentPropertyTitle}
                   </span>
                 </div>
@@ -183,53 +183,53 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
 
               {/* Name */}
               <div>
-                <label className="block text-xs uppercase tracking-wider text-[#192b20]/80 font-medium mb-1">
+                <label className="block text-xs uppercase tracking-wider text-[#2D3B32]/85 font-semibold mb-1">
                   Seu Nome Completo *
                 </label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-[#819885] absolute left-3 top-2.5" />
+                  <User className="w-4 h-4 text-[#586E5E] absolute left-3 top-2.5" />
                   <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Ex: Ana Silva"
-                    className="w-full pl-9 pr-3 py-2 bg-white border border-[#e8e2d9] rounded-sm text-xs text-[#192b20] focus:outline-none focus:border-[#192b20]"
+                    className="w-full pl-9 pr-3 py-2 bg-white border border-[#E3DACF] rounded-lg text-xs text-[#2D3B32] focus:outline-none focus:border-[#586E5E]"
                   />
                 </div>
               </div>
 
               {/* Phone / WhatsApp */}
               <div>
-                <label className="block text-xs uppercase tracking-wider text-[#192b20]/80 font-medium mb-1">
+                <label className="block text-xs uppercase tracking-wider text-[#2D3B32]/85 font-semibold mb-1">
                   Telefone / WhatsApp *
                 </label>
                 <div className="relative">
-                  <Phone className="w-4 h-4 text-[#819885] absolute left-3 top-2.5" />
+                  <Phone className="w-4 h-4 text-[#586E5E] absolute left-3 top-2.5" />
                   <input
                     type="tel"
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="(11) 99999-9999"
-                    className="w-full pl-9 pr-3 py-2 bg-white border border-[#e8e2d9] rounded-sm text-xs text-[#192b20] focus:outline-none focus:border-[#192b20]"
+                    className="w-full pl-9 pr-3 py-2 bg-white border border-[#E3DACF] rounded-lg text-xs text-[#2D3B32] focus:outline-none focus:border-[#586E5E]"
                   />
                 </div>
               </div>
 
               {/* Email (Optional) */}
               <div>
-                <label className="block text-xs uppercase tracking-wider text-[#192b20]/80 font-medium mb-1">
+                <label className="block text-xs uppercase tracking-wider text-[#2D3B32]/85 font-semibold mb-1">
                   E-mail (opcional)
                 </label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-[#819885] absolute left-3 top-2.5" />
+                  <Mail className="w-4 h-4 text-[#586E5E] absolute left-3 top-2.5" />
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="seuemail@exemplo.com"
-                    className="w-full pl-9 pr-3 py-2 bg-white border border-[#e8e2d9] rounded-sm text-xs text-[#192b20] focus:outline-none focus:border-[#192b20]"
+                    className="w-full pl-9 pr-3 py-2 bg-white border border-[#E3DACF] rounded-lg text-xs text-[#2D3B32] focus:outline-none focus:border-[#586E5E]"
                   />
                 </div>
               </div>
@@ -237,30 +237,30 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
               {/* Suggested Date & Time */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-[#192b20]/80 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-[#2D3B32]/85 font-semibold mb-1">
                     Data Sugerida
                   </label>
                   <div className="relative">
-                    <Calendar className="w-4 h-4 text-[#819885] absolute left-3 top-2.5" />
+                    <Calendar className="w-4 h-4 text-[#586E5E] absolute left-3 top-2.5" />
                     <input
                       type="date"
                       value={suggestedDate}
                       onChange={(e) => setSuggestedDate(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-white border border-[#e8e2d9] rounded-sm text-xs text-[#192b20] focus:outline-none focus:border-[#192b20]"
+                      className="w-full pl-9 pr-3 py-2 bg-white border border-[#E3DACF] rounded-lg text-xs text-[#2D3B32] focus:outline-none focus:border-[#586E5E]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-[#192b20]/80 font-medium mb-1">
+                  <label className="block text-xs uppercase tracking-wider text-[#2D3B32]/85 font-semibold mb-1">
                     Melhor Horário
                   </label>
                   <div className="relative">
-                    <Clock className="w-4 h-4 text-[#819885] absolute left-3 top-2.5" />
+                    <Clock className="w-4 h-4 text-[#586E5E] absolute left-3 top-2.5" />
                     <select
                       value={preferredContactTime}
                       onChange={(e) => setPreferredContactTime(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 bg-white border border-[#e8e2d9] rounded-sm text-xs text-[#192b20] focus:outline-none focus:border-[#192b20]"
+                      className="w-full pl-9 pr-3 py-2 bg-white border border-[#E3DACF] rounded-lg text-xs text-[#2D3B32] focus:outline-none focus:border-[#586E5E]"
                     >
                       <option value="Manhã (09h às 12h)">Manhã (09h às 12h)</option>
                       <option value="Tarde (14h às 18h)">Tarde (14h às 18h)</option>
@@ -273,7 +273,7 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
 
               {/* Message */}
               <div>
-                <label className="block text-xs uppercase tracking-wider text-[#192b20]/80 font-medium mb-1">
+                <label className="block text-xs uppercase tracking-wider text-[#2D3B32]/85 font-semibold mb-1">
                   Mensagem ou observações
                 </label>
                 <div className="relative">
@@ -282,12 +282,12 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Gostaria de conhecer o imóvel e saber detalhes sobre visitação..."
-                    className="w-full p-2.5 bg-white border border-[#e8e2d9] rounded-sm text-xs text-[#192b20] focus:outline-none focus:border-[#192b20]"
+                    className="w-full p-2.5 bg-white border border-[#E3DACF] rounded-lg text-xs text-[#2D3B32] focus:outline-none focus:border-[#586E5E]"
                   />
                 </div>
               </div>
 
-              <div className="text-[11px] text-[#192b20]/60 leading-tight">
+              <div className="text-[11px] text-[#2D3B32]/75 leading-tight">
                 Seus dados serão tratados com sigilo profissional para fins exclusivos de atendimento
                 imobiliário em Alphaville.
               </div>
@@ -296,9 +296,9 @@ export const VisitBookingModal: React.FC<VisitBookingModalProps> = ({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full bg-[#192b20] hover:bg-[#243d2e] text-[#fbf9f5] font-semibold text-xs uppercase tracking-wider py-3 px-4 rounded-sm transition-all shadow flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full bg-[#2D3B32] hover:bg-[#3B4D41] text-[#FAF7F2] font-semibold text-xs uppercase tracking-wider py-3 px-4 rounded-full transition-all shadow flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
-                  <Calendar className="w-4 h-4 text-[#c5a880]" />
+                  <Calendar className="w-4 h-4 text-[#E29578]" />
                   {submitting ? 'Registrando Solicitação...' : 'Confirmar Solicitação de Visita'}
                 </button>
               </div>

@@ -50,7 +50,9 @@ service cloud.firestore {
         (!('description' in data) || (data.description is string && data.description.size() <= 4000)) &&
         (!('condominiumName' in data) || (data.condominiumName is string && data.condominiumName.size() <= 150)) &&
         (!('region' in data) || (data.region is string && data.region.size() <= 150)) &&
-        (!('coverImage' in data) || (data.coverImage is string && data.coverImage.size() <= 1000));
+        (!('coverImage' in data) || (data.coverImage is string && data.coverImage.size() <= 2000)) &&
+        (!('gallery' in data) || (data.gallery is list && data.gallery.size() <= 500)) &&
+        (!('videos' in data) || (data.videos is list && data.videos.size() <= 200));
     }
 
     // Lead / Visit Request validation
@@ -60,6 +62,7 @@ service cloud.firestore {
         data.status in ['new', 'in_progress', 'visit_requested', 'visit_confirmed', 'pending_reply', 'proposal_active', 'converted', 'closed'] &&
         (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
         (!('message' in data) || (data.message is string && data.message.size() <= 2000)) &&
+        (!('notes' in data) || (data.notes is string && data.notes.size() <= 3000)) &&
         (!('propertyTitle' in data) || (data.propertyTitle is string && data.propertyTitle.size() <= 200)) &&
         (!('propertyId' in data) || (data.propertyId is string && data.propertyId.size() <= 128)) &&
         (!('preferredContactTime' in data) || (data.preferredContactTime is string && data.preferredContactTime.size() <= 100)) &&
@@ -75,14 +78,22 @@ service cloud.firestore {
         (!('whatsappNumber' in data) || (data.whatsappNumber is string && data.whatsappNumber.size() <= 50)) &&
         (!('contactPhone' in data) || (data.contactPhone is string && data.contactPhone.size() <= 50)) &&
         (!('contactEmail' in data) || (data.contactEmail is string && data.contactEmail.size() <= 150)) &&
-        (!('logoUrl' in data) || (data.logoUrl is string && data.logoUrl.size() <= 1000));
+        (!('logoUrl' in data) || (data.logoUrl is string && data.logoUrl.size() <= 2000)) &&
+        (!('aboutImageUrl' in data) || (data.aboutImageUrl is string && data.aboutImageUrl.size() <= 2000)) &&
+        (!('heroHeadline' in data) || (data.heroHeadline is string && data.heroHeadline.size() <= 250)) &&
+        (!('heroSubheadline' in data) || (data.heroSubheadline is string && data.heroSubheadline.size() <= 500));
     }
 
     // LandingPage validation
     function isValidLandingPage(data) {
       return data.slug is string && data.slug.size() > 0 && data.slug.size() <= 150 &&
         data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
-        data.status in ['draft', 'published'];
+        data.status in ['draft', 'published'] &&
+        (!('headline' in data) || (data.headline is string && data.headline.size() <= 250)) &&
+        (!('subheadline' in data) || (data.subheadline is string && data.subheadline.size() <= 500)) &&
+        (!('coverImage' in data) || (data.coverImage is string && data.coverImage.size() <= 2000)) &&
+        (!('videoUrl' in data) || (data.videoUrl is string && data.videoUrl.size() <= 2000)) &&
+        (!('gallery' in data) || (data.gallery is list && data.gallery.size() <= 500));
     }
 
     // Properties rules: Public can read published properties; Admin can manage all

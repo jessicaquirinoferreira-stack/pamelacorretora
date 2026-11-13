@@ -26,11 +26,11 @@ export const FloatingContactBar: React.FC<FloatingContactBarProps> = ({ onOpenBo
   return (
     <aside
       aria-label="Ações rápidas de contato"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 p-1.5 bg-[#192b20]/95 backdrop-blur-md border border-[#3b5242] rounded-full shadow-2xl transition-all duration-500 animate-fade-in"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 p-1.5 bg-[#2D3B32]/95 backdrop-blur-md border border-[#4D6254] rounded-full shadow-2xl transition-all duration-500 animate-fade-in"
     >
       <button
         onClick={onOpenBooking}
-        className="flex items-center gap-2 px-4 py-2 bg-[#c5a880] hover:bg-[#b8976b] text-[#192b20] text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-300 shadow-sm active:scale-95 cursor-pointer"
+        className="flex items-center gap-2 px-4 py-2 bg-[#B55D3E] hover:bg-[#9B4D32] text-[#FAF7F2] text-xs font-semibold uppercase tracking-wider rounded-full transition-all duration-300 shadow-sm active:scale-95 cursor-pointer"
       >
         <Calendar className="w-3.5 h-3.5" />
         <span className="hidden sm:inline">Agendar Visita</span>
@@ -44,10 +44,10 @@ export const FloatingContactBar: React.FC<FloatingContactBarProps> = ({ onOpenBo
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-2 text-white hover:text-[#c5a880] text-xs transition-colors"
+          className="flex items-center gap-1.5 px-3 py-2 text-[#FAF7F2] hover:text-[#E29578] text-xs transition-colors"
           title="WhatsApp Oficial"
         >
-          <Phone className="w-3.5 h-3.5 text-emerald-400" />
+          <Phone className="w-3.5 h-3.5 text-[#E29578]" />
           <span className="hidden md:inline">WhatsApp</span>
         </a>
       ) : null}
@@ -56,7 +56,7 @@ export const FloatingContactBar: React.FC<FloatingContactBarProps> = ({ onOpenBo
         href="https://www.instagram.com/pamelaboccaletti/"
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 text-[#fbf9f5]/70 hover:text-[#c5a880] transition-colors rounded-full"
+        className="p-2 text-[#FAF7F2]/80 hover:text-[#E29578] transition-colors rounded-full"
         title="Instagram @pamelaboccaletti"
         aria-label="Instagram"
       >

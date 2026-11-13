@@ -2,21 +2,23 @@
 
 @layer base {
   :root {
-    --color-forest: #192b20;
-    --color-forest-light: #243d2e;
-    --color-olive: #3b5242;
-    --color-sage: #819885;
-    --color-sand: #fbf9f5;
-    --color-sand-dark: #f0ebe1;
-    --color-gold: #c5a880;
-    --color-gold-hover: #b8976b;
+    --color-sage-deep: #2D3B32;
+    --color-sage-dark: #3B4D41;
+    --color-sage: #586E5E;
+    --color-sage-soft: #C6D4C8;
+    --color-offwhite: #FAF7F2;
+    --color-offwhite-warm: #F3EDE4;
+    --color-border: #E3DACF;
+    --color-terracotta: #B55D3E;
+    --color-terracotta-hover: #9B4D32;
+    --color-terracotta-light: #E29578;
   }
 
   html {
     scroll-behavior: smooth;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #fbf9f5;
-    color: #192b20;
+    background-color: #FAF7F2;
+    color: #2D3B32;
   }
 
   h1, h2, h3, .font-serif-luxury {
@@ -24,23 +26,23 @@
   }
 }
 
-/* Custom luxury scrollbar */
+/* Custom botanical scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0ebe1;
+  background: #F3EDE4;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #819885;
+  background: #586E5E;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b5242;
+  background: #2D3B32;
 }
 
 /* Animations from Magic UI and Aceternity UI */

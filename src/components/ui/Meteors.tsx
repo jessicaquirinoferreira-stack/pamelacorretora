@@ -19,7 +19,7 @@ export const Meteors: React.FC<MeteorsProps> = ({ number = 20 }) => {
         return (
           <span
             key={idx}
-            className="absolute h-0.5 w-0.5 rounded-full bg-[#c5a880] shadow-[0_0_0_1px_#c5a88015] rotate-[215deg] animate-meteor"
+            className="absolute h-0.5 w-0.5 rounded-full bg-[#E29578] shadow-[0_0_0_1px_#E2957825] rotate-[215deg] animate-meteor"
             style={{
               top: `${top}%`,
               left: `${left}%`,

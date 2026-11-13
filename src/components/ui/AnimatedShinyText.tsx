@@ -16,7 +16,7 @@ export const AnimatedShinyText: React.FC<AnimatedShinyTextProps> = ({
       className={`inline-block bg-[length:250%_100%] bg-clip-text text-transparent transition-colors animate-shiny-text ${className}`}
       style={{
         backgroundImage:
-          'linear-gradient(120deg, rgba(197, 168, 128, 0.7) 0%, rgba(251, 249, 245, 0.95) 50%, rgba(197, 168, 128, 0.7) 100%)',
+          'linear-gradient(120deg, rgba(226, 149, 120, 0.85) 0%, rgba(250, 247, 242, 1) 50%, rgba(226, 149, 120, 0.85) 100%)',
       }}
     >
       {children}

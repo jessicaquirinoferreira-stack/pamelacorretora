@@ -7,7 +7,7 @@ interface SpotlightProps {
 
 export const Spotlight: React.FC<SpotlightProps> = ({
   className = '',
-  fill = '#c5a880',
+  fill = '#E29578',
 }) => {
   return (
     <svg

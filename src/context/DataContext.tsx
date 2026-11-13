@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import {
   collection,
   doc,
@@ -8,7 +8,8 @@ import {
   deleteDoc,
   query,
   orderBy,
-  serverTimestamp,
+  getDocs,
+  getDoc,
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { Property, Lead, SiteSettings, LandingPage } from '../types';
@@ -29,14 +30,27 @@ interface DataContextType {
   loadingLeads: boolean;
   saveProperty: (property: Property) => Promise<void>;
   deleteProperty: (propertyId: string) => Promise<void>;
+  saveLandingPage: (landingPage: LandingPage) => Promise<void>;
+  deleteLandingPage: (landingPageId: string) => Promise<void>;
   saveSiteSettings: (settings: SiteSettings) => Promise<void>;
   submitLead: (leadData: Omit<Lead, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => Promise<string>;
   updateLeadStatus: (leadId: string, status: Lead['status'], notes?: string) => Promise<void>;
+  deleteLead: (leadId: string) => Promise<void>;
   seedInitialDataToFirestore: () => Promise<void>;
   isFirebaseConnected: boolean;
 }
 
 const DataContext = createContext<DataContextType | null>(null);
+
+function stripUndefined<T extends Record<string, any>>(obj: T): T {
+  const cleaned: Record<string, any> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned as T;
+}
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAdmin } = useAuth();
@@ -48,8 +62,38 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loadingSettings, setLoadingSettings] = useState<boolean>(true);
   const [loadingLeads, setLoadingLeads] = useState<boolean>(false);
   const [isFirebaseConnected, setIsFirebaseConnected] = useState<boolean>(true);
+  const isDbInitializedRef = useRef<boolean>(false);
+  const bootstrapAttemptedRef = useRef<boolean>(false);
 
-  // 1. Subscribe to properties (Real-time)
+  // 1. Subscribe to siteSettings (Real-time, also tracks whether DB was initialized)
+  useEffect(() => {
+    const settingsDoc = doc(db, 'siteSettings', 'global');
+
+    const unsubscribe = onSnapshot(
+      settingsDoc,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data() as SiteSettings;
+          if (data.initialized) {
+            isDbInitializedRef.current = true;
+          }
+          setSiteSettings({ ...INITIAL_SITE_SETTINGS, ...data });
+        } else {
+          setSiteSettings(INITIAL_SITE_SETTINGS);
+        }
+        setIsFirebaseConnected(true);
+        setLoadingSettings(false);
+      },
+      (error) => {
+        console.warn('Real-time settings listener notice:', error.message);
+        setLoadingSettings(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  // 2. Subscribe to properties (Real-time)
   useEffect(() => {
     const propertiesCol = collection(db, 'properties');
     const q = query(propertiesCol, orderBy('order', 'asc'));
@@ -58,13 +102,16 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       q,
       (snapshot) => {
         if (!snapshot.empty) {
+          isDbInitializedRef.current = true;
           const loaded: Property[] = [];
           snapshot.forEach((docSnap) => {
             loaded.push({ id: docSnap.id, ...(docSnap.data() as Omit<Property, 'id'>) });
           });
           setProperties(loaded);
+        } else if (isDbInitializedRef.current) {
+          // Database was already initialized and admin intentionally cleared items
+          setProperties([]);
         } else {
-          // If Firestore collection is empty, retain verified initial items
           setProperties(INITIAL_PROPERTIES);
         }
         setLoadingProperties(false);
@@ -78,29 +125,6 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsubscribe();
   }, []);
 
-  // 2. Subscribe to siteSettings (Real-time)
-  useEffect(() => {
-    const settingsDoc = doc(db, 'siteSettings', 'global');
-
-    const unsubscribe = onSnapshot(
-      settingsDoc,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          setSiteSettings(snapshot.data() as SiteSettings);
-        } else {
-          setSiteSettings(INITIAL_SITE_SETTINGS);
-        }
-        setLoadingSettings(false);
-      },
-      (error) => {
-        console.warn('Real-time settings listener notice:', error.message);
-        setLoadingSettings(false);
-      }
-    );
-
-    return () => unsubscribe();
-  }, []);
-
   // 3. Subscribe to landingPages (Real-time)
   useEffect(() => {
     const lpCol = collection(db, 'landingPages');
@@ -108,11 +132,15 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       lpCol,
       (snapshot) => {
         if (!snapshot.empty) {
+          isDbInitializedRef.current = true;
           const loaded: LandingPage[] = [];
           snapshot.forEach((docSnap) => {
             loaded.push({ id: docSnap.id, ...(docSnap.data() as Omit<LandingPage, 'id'>) });
           });
+          loaded.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
           setLandingPages(loaded);
+        } else if (isDbInitializedRef.current) {
+          setLandingPages([]);
         } else {
           setLandingPages(INITIAL_LANDING_PAGES);
         }
@@ -125,7 +153,49 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsubscribe();
   }, []);
 
-  // 4. Subscribe to leads (Real-time, when admin)
+  // 4. Auto-bootstrap initial records into Firestore on first Admin session so edits/deletions persist permanently
+  useEffect(() => {
+    if (!isAdmin || bootstrapAttemptedRef.current) return;
+    bootstrapAttemptedRef.current = true;
+
+    const ensureInitialPersisted = async () => {
+      try {
+        const [settingsSnap, propsSnap, lpsSnap] = await Promise.all([
+          getDoc(doc(db, 'siteSettings', 'global')),
+          getDocs(collection(db, 'properties')),
+          getDocs(collection(db, 'landingPages')),
+        ]);
+
+        const alreadyInitialized = settingsSnap.exists() && Boolean((settingsSnap.data() as SiteSettings).initialized);
+
+        if (!alreadyInitialized) {
+          if (propsSnap.empty) {
+            for (const prop of INITIAL_PROPERTIES) {
+              await setDoc(doc(db, 'properties', prop.id), stripUndefined(prop));
+            }
+          }
+          if (lpsSnap.empty) {
+            for (const lp of INITIAL_LANDING_PAGES) {
+              await setDoc(doc(db, 'landingPages', lp.id), stripUndefined(lp));
+            }
+          }
+          const baseSettings = settingsSnap.exists()
+            ? { ...INITIAL_SITE_SETTINGS, ...(settingsSnap.data() as SiteSettings), initialized: true }
+            : { ...INITIAL_SITE_SETTINGS, initialized: true };
+          await setDoc(doc(db, 'siteSettings', 'global'), stripUndefined(baseSettings));
+          isDbInitializedRef.current = true;
+        } else {
+          isDbInitializedRef.current = true;
+        }
+      } catch (err) {
+        console.warn('Bootstrap Firestore check notice:', err);
+      }
+    };
+
+    ensureInitialPersisted();
+  }, [isAdmin]);
+
+  // 5. Subscribe to leads (Real-time, when admin)
   useEffect(() => {
     if (!isAdmin) {
       setLeads([]);
@@ -142,7 +212,6 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         snapshot.forEach((docSnap) => {
           loaded.push({ id: docSnap.id, ...(docSnap.data() as Omit<Lead, 'id'>) });
         });
-        // Sort newest first
         loaded.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         setLeads(loaded);
         setLoadingLeads(false);
@@ -155,6 +224,16 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return () => unsubscribe();
   }, [isAdmin]);
+
+  // Helper ensuring DB is marked initialized on any admin write
+  const markDbInitialized = async () => {
+    if (isDbInitializedRef.current) return;
+    isDbInitializedRef.current = true;
+    await setDoc(
+      doc(db, 'siteSettings', 'global'),
+      stripUndefined({ ...siteSettings, initialized: true, updatedAt: new Date().toISOString() })
+    );
+  };
 
   // Submit Lead to Firestore
   const submitLead = async (
@@ -177,15 +256,15 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       status: 'new',
       notes: '',
       sourceUrl: window.location.href,
-      utmSource: '',
-      utmMedium: '',
-      utmCampaign: '',
+      utmSource: leadInput.utmSource || '',
+      utmMedium: leadInput.utmMedium || '',
+      utmCampaign: leadInput.utmCampaign || '',
       createdAt: nowIso,
       updatedAt: nowIso,
     };
 
     try {
-      await setDoc(doc(db, 'leads', leadId), cleanLead);
+      await setDoc(doc(db, 'leads', leadId), stripUndefined(cleanLead));
       return leadId;
     } catch (error) {
       handleFirestoreError(error, OperationType.CREATE, `leads/${leadId}`);
@@ -207,22 +286,45 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (notes !== undefined) {
         updates.notes = notes;
       }
-      await updateDoc(leadRef, updates);
+      await updateDoc(leadRef, stripUndefined(updates));
     } catch (error) {
       handleFirestoreError(error, OperationType.UPDATE, `leads/${leadId}`);
+    }
+  };
+
+  // Delete lead (Admin)
+  const deleteLead = async (leadId: string): Promise<void> => {
+    try {
+      await deleteDoc(doc(db, 'leads', leadId));
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, `leads/${leadId}`);
     }
   };
 
   // Save / Update Property (Admin)
   const saveProperty = async (property: Property): Promise<void> => {
     const propId = property.id || `prop-${Date.now()}`;
-    const cleanProp: Property = {
+    const nowIso = new Date().toISOString();
+    const cleanProp: Property = stripUndefined({
       ...property,
       id: propId,
-      updatedAt: new Date().toISOString(),
-    };
+      slug:
+        property.slug ||
+        property.title
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-'),
+      gallery: Array.isArray(property.gallery) ? property.gallery : [],
+      videos: Array.isArray(property.videos) ? property.videos : [],
+      features: Array.isArray(property.features) ? property.features : [],
+      createdAt: property.createdAt || nowIso,
+      updatedAt: nowIso,
+    });
 
     try {
+      await markDbInitialized();
       await setDoc(doc(db, 'properties', propId), cleanProp);
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, `properties/${propId}`);
@@ -232,19 +334,61 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Delete Property (Admin)
   const deleteProperty = async (propertyId: string): Promise<void> => {
     try {
+      await markDbInitialized();
       await deleteDoc(doc(db, 'properties', propertyId));
     } catch (error) {
       handleFirestoreError(error, OperationType.DELETE, `properties/${propertyId}`);
     }
   };
 
+  // Save / Update Landing Page (Admin)
+  const saveLandingPage = async (landingPage: LandingPage): Promise<void> => {
+    const lpId = landingPage.id || `lp-${Date.now()}`;
+    const nowIso = new Date().toISOString();
+    const cleanLp: LandingPage = stripUndefined({
+      ...landingPage,
+      id: lpId,
+      slug:
+        landingPage.slug ||
+        landingPage.title
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-'),
+      features: Array.isArray(landingPage.features) ? landingPage.features : [],
+      gallery: Array.isArray(landingPage.gallery) ? landingPage.gallery : [],
+      createdAt: landingPage.createdAt || nowIso,
+      updatedAt: nowIso,
+    });
+
+    try {
+      await markDbInitialized();
+      await setDoc(doc(db, 'landingPages', lpId), cleanLp);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.WRITE, `landingPages/${lpId}`);
+    }
+  };
+
+  // Delete Landing Page (Admin)
+  const deleteLandingPage = async (landingPageId: string): Promise<void> => {
+    try {
+      await markDbInitialized();
+      await deleteDoc(doc(db, 'landingPages', landingPageId));
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, `landingPages/${landingPageId}`);
+    }
+  };
+
   // Save Site Settings (Admin)
   const saveSiteSettings = async (settings: SiteSettings): Promise<void> => {
-    const updated = {
+    const updated = stripUndefined({
       ...settings,
+      initialized: true,
       updatedAt: new Date().toISOString(),
-    };
+    });
     try {
+      isDbInitializedRef.current = true;
       await setDoc(doc(db, 'siteSettings', 'global'), updated);
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, 'siteSettings/global');
@@ -254,17 +398,17 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // 1-Click Initial Data Seeding to Firestore
   const seedInitialDataToFirestore = async (): Promise<void> => {
     try {
-      // 1. Seed properties
       for (const prop of INITIAL_PROPERTIES) {
-        await setDoc(doc(db, 'properties', prop.id), prop);
+        await setDoc(doc(db, 'properties', prop.id), stripUndefined(prop));
       }
-      // 2. Seed siteSettings
-      await setDoc(doc(db, 'siteSettings', 'global'), INITIAL_SITE_SETTINGS);
-      // 3. Seed landingPages
+      await setDoc(
+        doc(db, 'siteSettings', 'global'),
+        stripUndefined({ ...INITIAL_SITE_SETTINGS, initialized: true, updatedAt: new Date().toISOString() })
+      );
       for (const lp of INITIAL_LANDING_PAGES) {
-        await setDoc(doc(db, 'landingPages', lp.id), lp);
+        await setDoc(doc(db, 'landingPages', lp.id), stripUndefined(lp));
       }
-      console.log('Dados iniciais provisionados no Firestore com sucesso.');
+      isDbInitializedRef.current = true;
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, 'seedInitialData');
     }
@@ -282,9 +426,12 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loadingLeads,
         saveProperty,
         deleteProperty,
+        saveLandingPage,
+        deleteLandingPage,
         saveSiteSettings,
         submitLead,
         updateLeadStatus,
+        deleteLead,
         seedInitialDataToFirestore,
         isFirebaseConnected,
       }}
